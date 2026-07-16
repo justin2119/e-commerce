@@ -48,11 +48,20 @@ class ProductScreen extends ConsumerWidget {
                   children: [
                     Container(
                         margin: EdgeInsets.all(5),
-                        height:MediaQuery.of(context).size.height*0.22,
+                        height:MediaQuery.of(context).size.height*0.3,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.deepOrange,
+                        )
+                    ),
+                    Positioned(
+                      right: -55,
+                        bottom: -20,
+                        child: Image.asset(
+                            "assets/image/01.png",
+                          width: 300,
+                          height: 300,
                         )
                     ),
                     Positioned(
@@ -72,7 +81,7 @@ class ProductScreen extends ConsumerWidget {
                         top: 60,
                         left: 15,
                         child:  Text(
-                          "Découvrez l'expérience\nd'achat idéale !",
+                          "Découvrez \nl'expérience\nd'achat idéale !",
                           style: GoogleFonts.abel(
                               fontSize: 35,
                               color: Colors.white
