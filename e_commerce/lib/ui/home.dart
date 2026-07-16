@@ -1,3 +1,5 @@
+import 'package:e_commerce/ui/widgets/category.dart';
+import 'package:e_commerce/ui/widgets/recommende_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,6 +41,7 @@ class ProductScreen extends ConsumerWidget {
       body: Container(
         margin: EdgeInsets.all(10),
         child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 10,),
               Stack(
@@ -107,7 +110,32 @@ class ProductScreen extends ConsumerWidget {
                     fontWeight: FontWeight.bold
                   ),)
                 ],
-              )
+              ),
+              SizedBox(height: 10,),
+              Categorie(),
+              SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                spacing: 5,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.api,color: Colors.deepOrange,),
+                      Text("Recommandée",style: GoogleFonts.abel(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold
+                      ),),
+                    ],
+                  ),
+                  TextButton(onPressed: (){}, child: Text("Voir plus",style: GoogleFonts.abel(
+                    fontSize: 20,
+                    color: Colors.deepOrange
+                  )))
+                ],
+              ),
+              SizedBox(height: 10,),
+              RecommendeWidget()
             ]),
       )
     );
