@@ -1,5 +1,4 @@
-import 'package:e_commerce/ui/home.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:e_commerce/ui/main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,6 +7,7 @@ void main(){
     ProviderScope(child: MyApp())
   );
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -15,7 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const ProductScreen(),
+      theme: ThemeData(
+        primarySwatch: Colors.deepOrange,
+        useMaterial3: true,
+      ),
+      home: const MainView(),
     );
   }
 }
