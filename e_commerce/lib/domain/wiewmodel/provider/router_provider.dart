@@ -1,3 +1,6 @@
+import 'package:e_commerce/domain/models/product.dart';
+import 'package:e_commerce/ui/feedback_screen.dart';
+import 'package:e_commerce/ui/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +21,15 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: '/',
                 builder: (context, state) => const ProductScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'details',
+                    builder: (context, state) {
+                      final product = state.extra as Product;
+                      return ProductDetailScreen(product: product);
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -31,9 +43,13 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           StatefulShellBranch(
             routes: [
-              GoRoute(
-                path: '/favorites',
-                builder: (context, state) => const Center(child: Text("Favoris")),
+              StatefulShellBranch(
+                routes: [
+                  GoRoute(
+                    path: '/feedback',
+                    builder: (context, state) => const FeedbackScreen(),
+                  ),
+                ],
               ),
             ],
           ),
