@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'home.dart';
-import 'wiewmodel/provider/navigation_provider.dart';
+import 'package:go_router/go_router.dart';
 
 class MainView extends ConsumerWidget {
-  const MainView({super.key});
+  const MainView({
+    super.key,
+    required this.navigationShell,
+  });
+
+  final StatefulNavigationShell navigationShell;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const pages = [
-      ProductScreen(), // Accueil
-      Center(child: Text("Liste des produits (En cours)")),
-      Center(child: Text("Favoris (En cours)")),
-    ];
-
-    final selectedIndex = ref.watch(navIndexProvider);
-
     return Scaffold(
-      body: IndexedStack(
-        index: selectedIndex,
-        children: pages,
-      ),
+      body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedIndex,
-        onTap: (index) => ref.read(navIndexProvider.notifier).state = index,
+        currentIndex: navigationShell.currentIndex,
+        onTap: (index) {
+          navigationShell.goBranch(
+            index,
+            initialLocation: index == navigationShell.currentIndex,
+          );
+        },
         selectedItemColor: Colors.deepOrange,
         unselectedItemColor: Colors.grey,
         items: const [
