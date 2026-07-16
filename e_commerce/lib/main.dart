@@ -1,4 +1,5 @@
-import 'package:e_commerce/domain/wiewmodel/provider/router_provider.dart';
+import 'package:e_commerce/ui/home.dart';
+import 'package:e_commerce/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,15 +14,13 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
-    
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
         useMaterial3: true,
       ),
-      routerConfig: router,
+      routerConfig: appRouter,
     );
   }
 }
