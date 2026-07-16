@@ -22,17 +22,11 @@ class DtoProduct {
   });
 
   factory DtoProduct.fromJson(Map<String, dynamic> json) {
-    // DummyJSON returns 'images' as a List<dynamic> of URLs.
-    // We safely extract the first image or default to an empty string.
-    final imagesList = json["images"] as List<dynamic>?;
-    final primaryImage = (imagesList != null && imagesList.isNotEmpty)
-        ? imagesList[0] as String
-        : "";
 
     return DtoProduct(
       id: json["id"] as int,
       title: json["title"] as String,
-      images: primaryImage,
+      images: json["images"][0] as String,
       category: json["category"] as String,
       description: json["description"] as String,
       price: (json["price"] as num).toDouble(),
