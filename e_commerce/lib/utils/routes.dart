@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 
+import '../domain/models/product.dart';
 import '../ui/home.dart';
 import '../ui/navigation_bottom.dart';
 import '../ui/product_detail.dart';
@@ -12,7 +13,10 @@ final GoRouter appRouter=GoRouter(
     ),
     GoRoute(
         path: "/detail",
-      builder: (context, state) => ProductDetail(),
+      builder: (context, state) {
+          final product=state.extra as Product;
+          return ProductDetail(product: product);
+      }
     )
   ]
 );

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import '../../domain/models/product.dart';
 import '../../domain/repositories/i_product_repository.dart';
@@ -16,7 +17,7 @@ try {
         final dynamic decoded = json.decode(response.body);
         if (decoded is Map<String, dynamic> && decoded['products'] is List) {
           final List<dynamic> productsJson = decoded['products'];
-          return productsJson.map((json) => Product.fromJson(json)).toList();
+          return productsJson.map((json) => DtoProduct.fromJson(json).toModel()).toList();
         } else if (decoded is List) {
           // Some endpoints may return a raw list; reuse existing DTO mapping
           return decoded.map((json) => DtoProduct.fromJson(json).toModel()).toList();

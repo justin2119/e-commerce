@@ -5,7 +5,6 @@ import '../../domain/models/product.dart';
 class RecommendeWidget extends StatelessWidget {
   final List<Product> products;
   const RecommendeWidget({Key? key, required this.products}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -16,7 +15,7 @@ class RecommendeWidget extends StatelessWidget {
               mainAxisSpacing: 10,
               childAspectRatio: 0.75,
           ),
-        itemCount: products.length,
+        itemCount: 4,
         itemBuilder: (context, index) {
           final product = products[index];
           return Stack(
@@ -64,7 +63,7 @@ class RecommendeWidget extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            "${product.price} €",
+                            "${product.price} CFA",
                             style: GoogleFonts.abel(
                               fontSize: 16,
                               color: Colors.deepOrange,
