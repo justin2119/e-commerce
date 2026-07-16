@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../domain/wiewmodel/provider/theme_provider.dart';
 
 class MainView extends ConsumerWidget {
   const MainView({
@@ -13,6 +14,15 @@ class MainView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Togo Marché'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.brightness_6),
+            onPressed: () => ref.read(themeProvider.notifier).toggleTheme(),
+          ),
+        ],
+      ),
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: navigationShell.currentIndex,
@@ -34,8 +44,8 @@ class MainView extends ConsumerWidget {
             label: 'Produits',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favoris',
+            icon: Icon(Icons.feedback),
+            label: 'Avis',
           ),
         ],
       ),
