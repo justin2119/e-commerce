@@ -1,9 +1,8 @@
 import 'package:e_commerce/ui/widgets/category.dart';
 import 'package:e_commerce/ui/widgets/recommende_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:e_commerce/domain/wiewmodel/provider/Product_Notifier.dart';
+import 'package:e_commerce/utils/product_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductScreen extends ConsumerWidget {
@@ -12,26 +11,27 @@ class ProductScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productAsync = ref.watch(productNotifierProvider);
+    
     return Scaffold(
       appBar: AppBar(
         title: TextField(
           decoration: InputDecoration(
             hintText: "Rechercher un produit......",
             hintStyle: GoogleFonts.abel(),
-            prefixIcon: Icon(Icons.search),
-            suffixIcon: Icon(Icons.camera_alt),
+            prefixIcon: const Icon(Icons.search),
+            suffixIcon: const Icon(Icons.camera_alt),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
           ),
         ),
         actions: [
           Container(
-            margin: EdgeInsets.all(5),
+            margin: const EdgeInsets.all(5),
             child: Stack(
               children: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart)),
-                Positioned(
+                IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
+                const Positioned(
                   right: 0,
-                  child: Text("12",style: TextStyle(fontSize: 15,color: Colors.red,fontWeight: FontWeight.bold),),
+                  child: Text("12", style: TextStyle(fontSize: 15, color: Colors.red, fontWeight: FontWeight.bold),),
                 )
               ],
             ),
@@ -39,16 +39,16 @@ class ProductScreen extends ConsumerWidget {
         ],
       ),
       body: Container(
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Stack(
                   children: [
                     Container(
-                        margin: EdgeInsets.all(5),
-                        height:MediaQuery.of(context).size.height*0.3,
+                        margin: const EdgeInsets.all(5),
+                        height: MediaQuery.of(context).size.height * 0.3,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -62,6 +62,7 @@ class ProductScreen extends ConsumerWidget {
                             "assets/image/01.png",
                           width: 300,
                           height: 300,
+                          errorBuilder: (context, error, stackTrace) => const SizedBox(),
                         )
                     ),
                     Positioned(
@@ -69,8 +70,8 @@ class ProductScreen extends ConsumerWidget {
                       left: 10,
                       child: Row(
                         children: [
-                          Icon(Icons.shopify_sharp,color: Colors.white,size: 40,),
-                          Text("E-commerce",style:GoogleFonts.abel(
+                          const Icon(Icons.shopify_sharp, color: Colors.white, size: 40,),
+                          Text("E-commerce", style: GoogleFonts.abel(
                               fontSize: 20,
                               color: Colors.white
                           ),)
@@ -92,15 +93,15 @@ class ProductScreen extends ConsumerWidget {
                       bottom: 15,
                       left: 15,
                       child: ElevatedButton(
-                          onPressed: (){},
+                          onPressed: () {},
                           style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               elevation: 10,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15)
                               )
                           ),
-                          child: Text("Achetez maintenant",style: GoogleFonts.abel(
+                          child: Text("Achetez maintenant", style: GoogleFonts.abel(
                               fontSize: 25,
                               color: Colors.deepOrange
                           ),)
@@ -108,43 +109,49 @@ class ProductScreen extends ConsumerWidget {
                     ),
                   ]
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Row(
-                spacing: 5,
                 children: [
-                  Icon(Icons.api,color: Colors.deepOrange,),
-                  Text("Catégorie",style: GoogleFonts.abel(
+                  const Icon(Icons.api, color: Colors.deepOrange,),
+                  const SizedBox(width: 5),
+                  Text("Catégorie", style: GoogleFonts.abel(
                       fontSize: 25,
                       color: Colors.black,
-                    fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold
                   ),)
                 ],
               ),
-              SizedBox(height: 10,),
-              Categorie(),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
+              const Categorie(),
+              const SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                spacing: 5,
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.api,color: Colors.deepOrange,),
-                      Text("Recommandée",style: GoogleFonts.abel(
+                      const Icon(Icons.api, color: Colors.deepOrange,),
+                      const SizedBox(width: 5),
+                      Text("Recommandée", style: GoogleFonts.abel(
                           fontSize: 25,
                           color: Colors.black,
                           fontWeight: FontWeight.bold
                       ),),
                     ],
                   ),
-                  TextButton(onPressed: (){}, child: Text("Voir plus",style: GoogleFonts.abel(
+                  TextButton(onPressed: () {}, child: Text("Voir plus", style: GoogleFonts.abel(
                     fontSize: 20,
                     color: Colors.deepOrange
                   )))
                 ],
               ),
-              SizedBox(height: 10,),
-              RecommendeWidget()
+              const SizedBox(height: 10,),
+              Expanded(
+                child: productAsync.when(
+                  data: (products) => RecommendeWidget(products: products),
+                  loading: () => const Center(child: CircularProgressIndicator(color: Colors.deepOrange)),
+                  error: (error, stack) => Center(child: Text("Erreur : $error", style: GoogleFonts.abel())),
+                ),
+              ),
             ]),
       )
     );
