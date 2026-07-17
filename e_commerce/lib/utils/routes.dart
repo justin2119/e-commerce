@@ -1,12 +1,9 @@
 import 'package:go_router/go_router.dart';
 import '../domain/models/product.dart';
 import '../ui/Categorie_list_item.dart';
-import '../ui/home.dart';
-import '../ui/category_products.dart';
 import '../ui/navigation_bottom.dart';
 import '../ui/product_detail.dart';
 import '../ui/products_list.dart';
-import '../ui/widgets/category.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
@@ -22,10 +19,10 @@ final GoRouter appRouter = GoRouter(
       },
     ),
     GoRoute(
-      path: "/category/:categoryName",
+      path: "/categorie",
       builder: (context, state) {
-        final categoryName = state.pathParameters['categoryName']!;
-        return CategoryDetailScreen(categoryName: categoryName);
+        final categorie=state.extra as String;
+        return CategorieListItem(categorie: categorie,);
       },
     ),
     GoRoute(

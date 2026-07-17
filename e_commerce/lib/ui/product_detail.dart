@@ -14,14 +14,17 @@ class ProductDetail extends StatelessWidget {
         slivers: [
           // SliverAppBar with product image
           SliverAppBar(
-            expandedHeight: MediaQuery.of(context).size.height * 0.4,
+            expandedHeight: MediaQuery
+                .of(context)
+                .size
+                .height * 0.4,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: Stack(
                 fit: StackFit.expand,
                 children: [
                   Image.network(
-                    widget.product.imageUrl,
+                    product.imageUrl,
                     fit: BoxFit.cover,
                   ),
                   const DecoratedBox(
@@ -51,7 +54,7 @@ class ProductDetail extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          widget.product.name,
+                          product.name,
                           style: GoogleFonts.abel(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
@@ -60,7 +63,7 @@ class ProductDetail extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "${widget.product.price} €",
+                        "${product.price} €",
                         style: GoogleFonts.abel(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -85,8 +88,9 @@ class ProductDetail extends StatelessWidget {
                       const Spacer(),
                       Chip(
                         label: Text(
-                          widget.product.category,
-                          style: GoogleFonts.abel(color: Colors.white, fontSize: 12),
+                          product.category,
+                          style: GoogleFonts.abel(color: Colors.white,
+                              fontSize: 12),
                         ),
                         backgroundColor: Colors.deepOrange.withOpacity(0.8),
                         padding: EdgeInsets.zero,
@@ -123,9 +127,7 @@ class ProductDetail extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  _buildFeatureRow("Disponibilité", "En stock"),
-                  _buildFeatureRow("Livraison", "Gratuite"),
-                  _buildFeatureRow("Garantie", "2 ans"),
+
                 ],
               ),
             ),
@@ -148,7 +150,8 @@ class ProductDetail extends StatelessWidget {
                 ),
                 child: IconButton(
                   onPressed: () {},
-                  icon: const Icon(Icons.favorite_border, color: Colors.deepOrange),
+                  icon: const Icon(
+                      Icons.favorite_border, color: Colors.deepOrange),
                 ),
               ),
               const SizedBox(width: 15),
@@ -177,28 +180,6 @@ class ProductDetail extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildFeatureRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: GoogleFonts.abel(color: Colors.grey.shade600, fontSize: 16),
-          ),
-          Text(
-            value,
-            style: GoogleFonts.abel(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-        ],
-      ),
-    );
-  }
       ),
     );
   }
