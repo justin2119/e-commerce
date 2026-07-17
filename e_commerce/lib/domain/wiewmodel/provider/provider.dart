@@ -1,3 +1,4 @@
+import 'package:e_commerce/domain/models/product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,3 +22,6 @@ final itemListWidgetProvider=StateProvider<List<Widget>>((ref)=>[
 ]);
 
 final indexProvider = StateProvider<int>((ref)=>0);
+final categorieProbvider=StateProvider<String>((ref)=>"");
+
+

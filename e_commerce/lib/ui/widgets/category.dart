@@ -1,12 +1,13 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-
+import 'package:go_router/go_router.dart';
+import '../../domain/models/product.dart';
 import 'categorie_button.dart';
 
-class Categorie extends StatelessWidget {
-  const Categorie ({Key? key}) : super(key: key);
-
+class Categorie extends ConsumerWidget {
+   Categorie ({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Flex(
@@ -16,52 +17,40 @@ class Categorie extends StatelessWidget {
         children: [
           CategorieButton(
             text: 'beauté',
-            onPressed: () {  },
+            onPressed: () {
+              context.push(
+                  "/categorie",
+                extra: "beauty"
+              );
+            },
           ),
           CategorieButton(
             text: 'parfums',
-            onPressed: () {  },
+            onPressed: () {
+              context.push(
+                  "/categorie",
+                  extra: "fragrances"
+              );
+            },
           ),
           CategorieButton(
             text: 'fourniture',
-            onPressed: () {  },
+            onPressed: () {
+              context.push(
+                  "/categorie",
+                  extra: "furniture"
+              );
+            },
           ),
           CategorieButton(
             text: 'épiceries',
-            onPressed: () {  },
+            onPressed: () {
+              context.push(
+                  "/categorie",
+                  extra: "groceries"
+              );
+            },
           ),
-          CategorieButton(
-            text: "décoration d'intérieur",
-            onPressed: () {  },
-          ),
-          CategorieButton(
-            text:"Accessoire de cuisine",
-            onPressed: () {  },
-          ),
-          CategorieButton(
-            text:"Chemises pour hommes",
-            onPressed: () {  },
-          ),
-          CategorieButton(
-            text:"chaussure pour hommes",
-            onPressed: () {  },
-          ),
-          CategorieButton(
-            text:"sac pour femme",
-            onPressed: () {  },
-          ),
-          CategorieButton(
-            text:"Robe pour femme",
-            onPressed: () {  },
-          ),
-          CategorieButton(
-            text:"Bijoux pour femmes",
-            onPressed: () {  },
-          ),
-          CategorieButton(
-            text:"Montres pour femmes",
-            onPressed: () {  },
-          )
         ],
       ),
     );

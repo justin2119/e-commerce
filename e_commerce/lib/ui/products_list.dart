@@ -16,7 +16,7 @@ class ProductList extends ConsumerWidget {
       appBar: AppBar(
         title: TextField(
           decoration: InputDecoration(
-            hintText: "Rechercher un produit......",
+            hintText: "Recherche un produit......",
             hintStyle: GoogleFonts.abel(),
             prefixIcon: const Icon(Icons.search),
             suffixIcon: const Icon(Icons.camera_alt),

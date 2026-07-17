@@ -2,17 +2,16 @@ import 'package:e_commerce/ui/widgets/category.dart';
 import 'package:e_commerce/ui/widgets/recommende_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../domain/wiewmodel/provider/Product_Notifier.dart';
 
 class ProductScreen extends ConsumerWidget {
   const ProductScreen({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productAsync = ref.watch(productNotifierProvider);
-    
     return Scaffold(
       appBar: AppBar(
         title: TextField(
@@ -123,7 +122,7 @@ class ProductScreen extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 10,),
-              const Categorie(),
+              Categorie(),
               const SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,7 +138,9 @@ class ProductScreen extends ConsumerWidget {
                       ),),
                     ],
                   ),
-                  TextButton(onPressed: () {}, child: Text("Voir plus", style: GoogleFonts.abel(
+                  TextButton(onPressed: () {
+                    context.push("/liste");
+                  }, child: Text("Voir plus", style: GoogleFonts.abel(
                     fontSize: 20,
                     color: Colors.deepOrange
                   )))

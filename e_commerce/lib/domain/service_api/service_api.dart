@@ -7,8 +7,6 @@ class ServiceApi {
     try {
       final response = await dio.get(baseUrl);
       if (response.statusCode == 200) {
-        // We use .map() on the raw dynamic list to extract products.
-        // Direct casting to List<Map<String, dynamic>> often fails with dynamic JSON lists.
         final List<dynamic> products = response.data['products'];
         return products.map((e) => e as Map<String, dynamic>).toList();
       } else {
