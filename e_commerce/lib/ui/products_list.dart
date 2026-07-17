@@ -134,7 +134,9 @@ class ProductList extends ConsumerWidget {
                   itemCount: products.length,
                 ),
                 error: (error, stackTrace) => Text("Erreur : $error"),
-                loading: () => const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator(
+                  color: Colors.deepOrange,
+                )),
               ),
             ),
           ],
