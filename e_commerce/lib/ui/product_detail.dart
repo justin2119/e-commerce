@@ -1,156 +1,214 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../domain/models/product.dart';
 
-class ProductDetail extends StatefulWidget {
+class ProductDetail extends StatelessWidget {
   final Product product;
 
   const ProductDetail({super.key, required this.product});
 
   @override
-  State<ProductDetail> createState() => _ProductDetailState();
-}
-
-class _ProductDetailState extends State<ProductDetail> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Details",
-          style: GoogleFonts.abel(
-              fontSize: 25,
-              fontWeight: FontWeight.bold
+      body: CustomScrollView(
+        slivers: [
+          // 1. SliverAppBar for an elegant presentation of the image
+          SliverAppBar(
+            expandedHeight: MediaQuery.of(context).size.height * 0.4,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Image.network(
+                    product.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                  const DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.center,
+                        colors: [Colors.black54, Colors.transparent],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            backgroundColor: Colors.deepOrange,
+            foregroundColor: Colors.white,
           ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.deepOrange,
-        foregroundColor: Colors.white,
+          
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 2. Clear visual hierarchy: Title and Price
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          product.name,
+                          style: GoogleFonts.abel(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "${product.price} €",
+                        style: GoogleFonts.abel(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepOrange,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  
+                  // Rating display (pro touch)
+                  Row(
+                    children: [
+                      const Icon(Icons.star, color: Colors.amber, size: 20),
+                      const SizedBox(width: 5),
+                      Text(
+                        "4.5 (120 avis)",
+                        style: GoogleFonts.abel(
+                          fontSize: 16,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      const Spacer(),
+                      Chip(
+                        label: Text(
+                          product.category,
+                          style: GoogleFonts.abel(color: Colors.white, fontSize: 12),
+                        ),
+                        backgroundColor: Colors.deepOrange.withOpacity(0.8),
+                        padding: EdgeInsets.zero,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                    ],
+                  ),
+                  const Divider(height: 40),
+                  
+                  // 5. Product Features/Details Section
+                  Text(
+                    "Description",
+                    style: GoogleFonts.abel(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    product.description,
+                    style: GoogleFonts.abel(
+                      fontSize: 16,
+                      height: 1.5,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 30),
+                  
+                  // 5. Additional characteristics (mock data for pro look)
+                  Text(
+                    "Caractéristiques",
+                    style: GoogleFonts.abel(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  _buildFeatureRow("Disponibilité", "En stock"),
+                  _buildFeatureRow("Livraison", "Gratuite"),
+                  _buildFeatureRow("Garantie", "2 ans"),
+                  
+                  const SizedBox(height: 100), // Space for bottom button
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
-      body: Container(
-          margin: const EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      
+      // 3. Main stylish Action Button
+      bottomSheet: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, -5),
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: Row(
             children: [
               Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.4,
-                  decoration: BoxDecoration(
-                    color: Colors.deepOrange,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Image.network(
-                    widget.product.imageUrl,
-                    fit: BoxFit.cover,
-                  )
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.favorite_border, color: Colors.deepOrange),
+                ),
               ),
-              const SizedBox(height: 10,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(widget.product.name, style: GoogleFonts.abel(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold
-                  )),
-                  Text("${widget.product.price} CFA", style: GoogleFonts.abel(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.deepOrange
-                  )),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    spacing: 5,
-                    children: [
-                      Icon(Icons.star, color: Colors.deepOrange, size: 20),
-                      Text("4.5", style: GoogleFonts.abel(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey
-                      ))
-                    ],
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(9),
-                    decoration: BoxDecoration(
-                        color: Colors.deepOrange,
-                        borderRadius: BorderRadius.circular(10)
+              const SizedBox(width: 15),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepOrange,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Text(
-                        "${widget.product.category}", style: GoogleFonts.abel(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white
-                    )),
-                  )
-                ],
-              ),
-              const Divider(
-                color: Colors.grey,
-                thickness: 2,
-              ),
-              Text("Description", style: GoogleFonts.abel(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              )),
-              Text("${widget.product.description}", style: GoogleFonts.abel(
-                fontSize: 20,
-              )),
-              Text("Caractéristique", style: GoogleFonts.abel(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              )),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Disponibilité",style: GoogleFonts.abel(
-                        fontSize: 20,
-                        color: Colors.grey.shade800
-                      ),),
-                      Text("Livraison",style: GoogleFonts.abel(
-                          fontSize: 20,
-                          color: Colors.grey.shade800
-                      ),),
-                      Text("Garantie",style: GoogleFonts.abel(
-                          fontSize: 20,
-                          color: Colors.grey.shade800
-                      ),)
-                    ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("En Stock",style: GoogleFonts.abel(
-                        fontSize: 20,
-                        color: Colors.grey.shade800
-                      ),),
-                      Text("Garantie",style: GoogleFonts.abel(
-                          fontSize: 20,
-                          color: Colors.grey.shade800
-                      ),),
-                      Text("12 mois",style: GoogleFonts.abel(
-                          fontSize: 20,
-                          color: Colors.grey.shade800
-                      ),)
-                    ],
+                  child: Text(
+                    "Ajouter au panier",
+                    style: GoogleFonts.abel(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ],
+                ),
               ),
             ],
-          )
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFeatureRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: GoogleFonts.abel(color: Colors.grey.shade600, fontSize: 16),
+          ),
+          Text(
+            value,
+            style: GoogleFonts.abel(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+        ],
       ),
     );
   }

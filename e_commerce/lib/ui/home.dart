@@ -1,8 +1,10 @@
-import 'package:e_commerce/ui/widgets/category.dart';
 import 'package:e_commerce/ui/widgets/recommende_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:e_commerce/utils/product_provider.dart';
+import 'package:e_commerce/utils/category_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
 import '../domain/wiewmodel/provider/Product_Notifier.dart';
 
@@ -12,6 +14,7 @@ class ProductScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productAsync = ref.watch(productNotifierProvider);
+    final categoriesAsync = ref.watch(categoriesProvider);
     
     return Scaffold(
       appBar: AppBar(
@@ -115,7 +118,7 @@ class ProductScreen extends ConsumerWidget {
                 children: [
                   const Icon(Icons.api, color: Colors.deepOrange,),
                   const SizedBox(width: 5),
-                  Text("Catégorie", style: GoogleFonts.abel(
+                  Text("Catégories", style: GoogleFonts.abel(
                       fontSize: 25,
                       color: Colors.black,
                       fontWeight: FontWeight.bold
@@ -123,7 +126,29 @@ class ProductScreen extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 10,),
-              const Categorie(),
+              // Categories horizontal list
+              SizedBox(
+                height: 50,
+                child: categoriesAsync.when(
+                  data: (categories) => ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categories.length,
+                    itemBuilder: (context, index) {
+                      final cat = categories[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: ActionChip(
+                          label: Text(cat, style: GoogleFonts.abel(color: Colors.white)),
+                          backgroundColor: Colors.deepOrange,
+                          onPressed: () => context.push('/category/$cat'),
+                        ),
+                      );
+                    },
+                  ),
+                  loading: () => const Center(child: CircularProgressIndicator(color: Colors.deepOrange)),
+                  error: (err, stack) => Text("Erreur: $err"),
+                ),
+              ),
               const SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
