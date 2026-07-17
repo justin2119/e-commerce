@@ -12,7 +12,7 @@ class ProductDetail extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // 1. SliverAppBar for an elegant presentation of the image
+          // SliverAppBar with product image
           SliverAppBar(
             expandedHeight: MediaQuery.of(context).size.height * 0.4,
             pinned: true,
@@ -39,14 +39,13 @@ class ProductDetail extends StatelessWidget {
             backgroundColor: Colors.deepOrange,
             foregroundColor: Colors.white,
           ),
-          
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 2. Clear visual hierarchy: Title and Price
+                  // Title & price hierarchy
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -71,8 +70,7 @@ class ProductDetail extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  
-                  // Rating display (pro touch)
+                  // Rating + category chip
                   Row(
                     children: [
                       const Icon(Icons.star, color: Colors.amber, size: 20),
@@ -97,8 +95,7 @@ class ProductDetail extends StatelessWidget {
                     ],
                   ),
                   const Divider(height: 40),
-                  
-                  // 5. Product Features/Details Section
+                  // Description section
                   Text(
                     "Description",
                     style: GoogleFonts.abel(
@@ -115,10 +112,8 @@ class ProductDetail extends StatelessWidget {
                       color: Colors.black87,
                     ),
                   ),
-                  
                   const SizedBox(height: 30),
-                  
-                  // 5. Additional characteristics (mock data for pro look)
+                  // Features section
                   Text(
                     "Caractéristiques",
                     style: GoogleFonts.abel(
@@ -130,31 +125,21 @@ class ProductDetail extends StatelessWidget {
                   _buildFeatureRow("Disponibilité", "En stock"),
                   _buildFeatureRow("Livraison", "Gratuite"),
                   _buildFeatureRow("Garantie", "2 ans"),
-                  
-                  const SizedBox(height: 100), // Space for bottom button
                 ],
               ),
             ),
           ),
         ],
       ),
-      
-      // 3. Main stylish Action Button
-      bottomSheet: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, -5),
-            ),
-          ],
-        ),
-        child: SafeArea(
+      // Bottom navigation bar replaces previous bottomSheet
+      bottomNavigationBar: BottomAppBar(
+        elevation: 8,
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           child: Row(
             children: [
+              // Favorite icon (optional)
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey.shade300),
@@ -166,6 +151,7 @@ class ProductDetail extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 15),
+              // Primary action button – Add to cart
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {},
