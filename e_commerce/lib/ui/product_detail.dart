@@ -63,7 +63,7 @@ class ProductDetail extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "${product.price} €",
+                        "${product.price} CFA",
                         style: GoogleFonts.abel(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -90,7 +90,7 @@ class ProductDetail extends StatelessWidget {
                         label: Text(
                           product.category,
                           style: GoogleFonts.abel(color: Colors.white,
-                              fontSize: 12),
+                              fontSize: 20),
                         ),
                         backgroundColor: Colors.deepOrange.withOpacity(0.8),
                         padding: EdgeInsets.zero,
@@ -100,11 +100,10 @@ class ProductDetail extends StatelessWidget {
                     ],
                   ),
                   const Divider(height: 40),
-                  // Description section
                   Text(
                     "Description",
                     style: GoogleFonts.abel(
-                      fontSize: 20,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -112,74 +111,108 @@ class ProductDetail extends StatelessWidget {
                   Text(
                     product.description,
                     style: GoogleFonts.abel(
-                      fontSize: 16,
-                      height: 1.5,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  // Features section
-                  Text(
-                    "Caractéristiques",
-                    style: GoogleFonts.abel(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 25
                     ),
                   ),
                   const SizedBox(height: 10),
-
+                  Text(
+                    "Caractéristiques",
+                    style: GoogleFonts.abel(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Disponibilite",
+                            style: GoogleFonts.abel(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey
+                            ),
+                          ),
+                          Text("Livraison",
+                            style: GoogleFonts.abel(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey
+                            ),
+                          ),
+                          Text("Garantie",
+                            style: GoogleFonts.abel(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("En Stock",
+                            style: GoogleFonts.abel(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey
+                            ),
+                          ),
+                          Text("Gratuite",
+                            style: GoogleFonts.abel(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey
+                            ),
+                          ),
+                          Text("12 mois",
+                            style: GoogleFonts.abel(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
           ),
         ],
       ),
-      // Bottom navigation bar replaces previous bottomSheet
       bottomNavigationBar: BottomAppBar(
         elevation: 8,
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          child: Row(
-            children: [
-              // Favorite icon (optional)
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade300),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                      Icons.favorite_border, color: Colors.deepOrange),
-                ),
-              ),
-              const SizedBox(width: 15),
-              // Primary action button – Add to cart
-              Expanded(
-                child: ElevatedButton(
+        color: Colors.grey,
+        child: Row(
+          children: [
+            IconButton(
+              onPressed: () {  },
+              icon: Icon(Icons.favorite,size: 40,color:Colors.white,),
+            ),
+            Expanded(
+              child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepOrange,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 18),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                      padding: const EdgeInsets.all(10),
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)
+                      )
                   ),
-                  child: Text(
-                    "Ajouter au panier",
-                    style: GoogleFonts.abel(
-                      fontSize: 18,
+                  child: Text("Ajouter au panier", style: GoogleFonts.abel(
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                      color: Colors.deepOrange
+                  ),)
               ),
-            ],
-          ),
-        ),
+            )
+          ],
+        )
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:e_commerce/ui/widgets/category.dart';
 import 'package:e_commerce/ui/widgets/recommende_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +19,6 @@ class ProductScreen extends ConsumerWidget {
             hintText: "Rechercher un produit......",
             hintStyle: GoogleFonts.abel(),
             prefixIcon: const Icon(Icons.search),
-            suffixIcon: const Icon(Icons.camera_alt),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
           ),
         ),
@@ -120,6 +120,7 @@ class ProductScreen extends ConsumerWidget {
                   ),)
                 ],
               ),
+              Categorie(),
               const SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

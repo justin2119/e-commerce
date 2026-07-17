@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import '../domain/models/product.dart';
 import '../ui/Categorie_list_item.dart';
 import '../ui/navigation_bottom.dart';
+import '../ui/panier.dart';
 import '../ui/product_detail.dart';
 import '../ui/products_list.dart';
 
@@ -20,13 +21,6 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: "/categorie",
-      builder: (context, state) {
-        final categorie=state.extra as String;
-        return CategorieListItem(categorie: categorie,);
-      },
-    ),
-    GoRoute(
-      path: "/categorie",
       builder: (context, state){
         final categorie= state.extra as String;
         return CategorieListItem(categorie: categorie,);
@@ -35,6 +29,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: "/liste",
       builder: (context, state) => ProductList(),
+    ),
+    GoRoute(
+      path: "/panier",
+      builder: (context, state) => Panier(),
     ),
   ]
 );

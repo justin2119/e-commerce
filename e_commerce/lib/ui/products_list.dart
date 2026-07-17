@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +18,6 @@ class ProductList extends ConsumerWidget {
             hintText: "Recherche un produit......",
             hintStyle: GoogleFonts.abel(),
             prefixIcon: const Icon(Icons.search),
-            suffixIcon: const Icon(Icons.camera_alt),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
           ),
         ),
@@ -40,6 +38,9 @@ class ProductList extends ConsumerWidget {
       ),
       body: Container(
         margin: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: Colors.deepOrange.shade50
+        ),
         child: Column(
           children: [
             Expanded(

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import '../../../ui/favorite_products.dart';
-import '../../../ui/home.dart';
+import '../../../ui/Acceuil.dart';
 import '../../../ui/products_list.dart';
 import '../../../ui/profil_users.dart';
 import '../../repository/product_produit_implemente.dart';
@@ -22,6 +22,7 @@ final itemListWidgetProvider=StateProvider<List<Widget>>((ref)=>[
 ]);
 
 final indexProvider = StateProvider<int>((ref)=>0);
-final categorieProbvider=StateProvider<String>((ref)=>"");
+final PanierProvider=StateProvider<List<Product>>((ref)=>[]);
+final FavoriteProvider=StateProvider<List<Product>>((ref)=>[]);
 
 

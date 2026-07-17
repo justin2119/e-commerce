@@ -15,6 +15,7 @@ class ProductNotifier extends AsyncNotifier<List<Product>> {
       () async => await ref.read(ProduitRepositoryProvider).getProducts(),
     );
   }
+  
 }
 
 final productNotifierProvider = AsyncNotifierProvider<ProductNotifier,List<Product>>(ProductNotifier.new);
