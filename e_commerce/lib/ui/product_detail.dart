@@ -1,14 +1,14 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../domain/models/product.dart';
+import '../domain/wiewmodel/provider/panier_Notifier.dart';
 
-class ProductDetail extends StatelessWidget {
+class ProductDetail extends ConsumerWidget {
   final Product product;
-
   const ProductDetail({super.key, required this.product});
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -196,7 +196,10 @@ class ProductDetail extends StatelessWidget {
             ),
             Expanded(
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ref.read(cartProvider.notifier)
+                        .addToCart(product);
+                  },
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(10),
                       elevation: 10,

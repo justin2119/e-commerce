@@ -6,12 +6,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 
 import '../domain/wiewmodel/provider/Product_Notifier.dart';
+import '../domain/wiewmodel/provider/panier_Notifier.dart';
 
 class ProductScreen extends ConsumerWidget {
   const ProductScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productAsync = ref.watch(productNotifierProvider);
+    final cart = ref.watch(cartProvider);
+    final itemcount=cart.length;
     return Scaffold(
       appBar: AppBar(
         title: TextField(
@@ -27,10 +30,12 @@ class ProductScreen extends ConsumerWidget {
             margin: const EdgeInsets.all(5),
             child: Stack(
               children: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
-                const Positioned(
+                IconButton(onPressed: () {
+                  context.push("/panier");
+                }, icon: const Icon(Icons.shopping_cart)),
+                Positioned(
                   right: 0,
-                  child: Text("12", style: TextStyle(fontSize: 15, color: Colors.red, fontWeight: FontWeight.bold),),
+                  child: Text("${itemcount}", style: const TextStyle(fontSize: 15, color: Colors.red, fontWeight: FontWeight.bold),),
                 )
               ],
             ),

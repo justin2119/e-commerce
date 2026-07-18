@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../domain/models/product.dart';
 
@@ -19,6 +20,9 @@ class RecommendeWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           final product = products[index];
           return InkWell(
+            onTap: (){
+              context.push("/detail",extra: product);
+            },
             child: Stack(
               children: [
                 Container(
