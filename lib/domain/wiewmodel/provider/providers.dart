@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../data/repositories/product_repository.dart';
+import '../../../data/repositories/product_repository_impl.dart';
 import '../../../data/repositories/cart_repository.dart';
 import '../../../data/repositories/favorite_repository.dart';
 import '../../models/product.dart';
@@ -13,7 +13,7 @@ final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
 
 // 2. Repository Providers
 final productRepositoryProvider = Provider<IProductRepository>((ref) {
-  return ProductRepository();
+  return ProductRepositoryImpl();
 });
 
 final cartRepositoryProvider = Provider<CartRepository>((ref) {
@@ -26,19 +26,19 @@ final favoriteRepositoryProvider = Provider<FavoriteRepository>((ref) {
   return FavoriteRepository(prefs);
 });
 
-// 3. Products Provider (FutureProvider)
+// 3. Products Provider
 final productsProvider = FutureProvider<List<Product>>((ref) async {
   final repository = ref.watch(productRepositoryProvider);
   return repository.getProducts();
 });
 
-// 4. Product Detail Provider (FutureProvider.family)
+// 4. Product Detail Provider
 final productDetailProvider = FutureProvider.family<Product?, String>((ref, id) async {
   final repository = ref.watch(productRepositoryProvider);
   return repository.getProductById(id);
 });
 
-// 5. Cart Provider (AsyncNotifierProvider)
+// 5. Cart Provider
 class CartNotifier extends AsyncNotifier<List<Product>> {
   @override
   Future<List<Product>> build() async {
@@ -69,7 +69,7 @@ class CartNotifier extends AsyncNotifier<List<Product>> {
 
 final cartProvider = AsyncNotifierProvider<CartNotifier, List<Product>>(CartNotifier.new);
 
-// 6. Favorite Provider (AsyncNotifierProvider)
+// 6. Favorite Provider
 class FavoriteNotifier extends AsyncNotifier<List<Product>> {
   @override
   Future<List<Product>> build() async {
@@ -95,7 +95,7 @@ class FavoriteNotifier extends AsyncNotifier<List<Product>> {
 
 final favoriteProvider = AsyncNotifierProvider<FavoriteNotifier, List<Product>>(FavoriteNotifier.new);
 
-// 7. Product Filter Provider (StateProvider)
+// 7. Product Filter Provider
 class ProductFilter {
   final String searchQuery;
   final String category;

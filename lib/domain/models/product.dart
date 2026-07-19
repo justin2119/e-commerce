@@ -1,40 +1,20 @@
-import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-@immutable
-class Product {
-  final int id;
-  final String name;
-  final String description;
-  final double price;
-  final String imageUrl;
-  final String category;
+part 'product.freezed.dart';
+part 'product.g.dart';
 
+@freezed
+class Product with _\$Product {
+  const factory Product({
+    required String id,
+    required String name,
+    required String description,
+    required double price,
+    required String imageUrl,
+    required String categoryId,
+    required String origin,
+    required String conservationType,
+  }) = _Product;
 
-  const Product({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.imageUrl,
-    required this.category,
-  });
-
-  Product copyWith({
-    int? id,
-    String? name,
-    String? description,
-    double? price,
-    String? imageUrl,
-    String? category,
-  }) {
-    return Product(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      price: price ?? this.price,
-      imageUrl: imageUrl ?? this.imageUrl,
-      category: category ?? this.category,
-    );
-  }
-
+  factory Product.fromJson(Map<String, dynamic> json) => _\$ProductFromJson(json);
 }
