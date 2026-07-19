@@ -1,4 +1,4 @@
-# Ecommerce Poke - Mobile Application
+# Ecommerce - Mobile Application
 
 ## Project Overview
 This is a high-performance Flutter e-commerce mobile application designed with a focus on **Clean Architecture**, **Robust State Management**, and a minimalist **Dark UI** aesthetic. The project implements persistent storage for the shopping cart and user favorites, ensuring a seamless user experience across sessions.
