@@ -1,60 +1,56 @@
-# Togo Marché : Infrastructure E-commerce Flutter
+# Ecommerce Poke - Mobile Application
 
+## Project Overview
+This is a high-performance Flutter e-commerce mobile application designed with a focus on **Clean Architecture**, **Robust State Management**, and a minimalist **Dark UI** aesthetic. The project implements persistent storage for the shopping cart and user favorites, ensuring a seamless user experience across sessions.
 
-## 🛠 Stack Technique
+## Clean Architecture
+The project is strictly organized into three distinct layers:
+1. **Data Layer**: Responsible for data retrieval and persistence.
+   - `lib/data/repositories/`: Concrete implementations of repositories (Product, Cart, Favorite).
+   - `lib/data/dto/`: Data Transfer Objects for safe JSON serialization.
+   - `lib/data/data_test.dart`: Mock data source for Togolese specialty products.
+2. **Domain Layer**: Contains the core business logic and entities.
+   - `lib/domain/models/`: Core entities (Product).
+   - `lib/domain/repositories/`: Abstract repository interfaces.
+   - `lib/domain/wiewmodel/provider/`: Riverpod providers for application state.
+3. **Presentation Layer**: The UI components.
+   - `lib/screens/`: Modular screens (Home, Detail, Cart, Profile).
+   - `lib/main.dart`: Application entry point and routing configuration.
 
-- **Framework** : [Flutter](https://flutter.dev) (Null-safety)
-- **Gestion d'État** : [Riverpod](https://riverpod.dev) (Utilisation de `AsyncNotifier` pour une gestion asynchrone robuste)
-- **Architecture** : Clean Architecture avec pattern MVVM (Model-View-ViewModel)
-- **Réseau** : [Dio](https://pub.dev/packages/dio) pour des requêtes API performantes et sécurisées
-- **Persistence & Mapping** : DTOs (Data Transfer Objects) typés et immuables
+## Riverpod Providers
+We implement 5+ distinct Riverpod providers for granular state control:
+- **productsProvider**: A FutureProvider that fetches the product list asynchronously.
+- **productDetailProvider**: A Family FutureProvider for fetching specific product details by ID.
+- **cartProvider**: An AsyncNotifierProvider that manages persistent shopping cart state.
+- **favoriteProvider**: An AsyncNotifierProvider managing the user's persistent favorite items.
+- **productFilterProvider**: A StateProvider handling search, category filtering, and price sorting.
+- **userProfileProvider**: Provides static fictional user profile data.
+- **filteredProductsProvider**: A derived provider that computes the filtered and sorted list based on current user preferences.
 
-## ✨ Fonctionnalités & État du Projet
+## Key Features
+- **Persistence**: Using `shared_preferences` with JSON serialization through DTOs.
+- **Error Handling**: Robust try-catch blocks and explicit `FormatException` handling in DTO parsing.
+- **UI Design**: 
+  - Zero border radius (`0.0`) on all cards, buttons, and inputs.
+  - Custom typography using `GoogleFonts.abel`.
+  - Deep dark theme (`#263238`) with high-contrast white accents.
+- **Navigation**: Declarative routing using `go_router`.
 
-- **Validation par API Mock** : L'application utilise actuellement [DummyJSON](https://dummyjson.com) pour simuler les interactions backend, permettant de valider le mapping de données complexe et la gestion d'état avant le passage en production.
-- **Architecture Propre (Clean Architecture)** : Séparation stricte des responsabilités entre la couche de données, le domaine et la présentation.
-- **Pattern MVVM** : Utilisation de ViewModels pour isoler la logique métier de l'interface utilisateur.
-- **Mapping de Données Résilient** : Implémentation de DTOs capables de transformer des structures JSON hétérogènes (ex: conversion de listes d'images en URLs uniques) en modèles de domaine stables.
-- **Prêt pour le Terroir** : Les modèles de données sont conçus pour intégrer nativement les spécificités des produits togolais (origine, type de conservation).
+## Getting Started
+### Dependencies
+- `flutter_riverpod`: State management.
+- `shared_preferences`: Local persistence.
+- `go_router`: Declarative routing.
+- `google_fonts`: Custom typography.
 
-## 📂 Structure du Projet
+### Installation
+1. Clone the repository.
+2. Run `flutter pub get` to install dependencies.
+3. Run `flutter run` to start the application.
 
-L'application suit une structure modulaire basée sur la Clean Architecture :
-
-```text
-lib/
-├── data/           # Sources de données et implémentations des dépôts
-│   └── data_test   # Configuration des données locales de test
-├── domain/         # Cœur métier (Entités, Interfaces, DTOs)
-│   ├── models/     # Modèles de domaine immuables
-│   ├── dto/        # Mapping et transfert de données API
-│   └── repository/ # Contrats et interfaces de données
-├── ui/             # Couche de présentation
-│   └── viewmodel/  # Logique d'état et interaction (Riverpod)
-└── main.dart       # Point d'entrée de l'application
+### Running Tests
+Execute the comprehensive test suite with:
+```bash
+flutter test
 ```
-
-## 🚀 Installation
-
-1. **Cloner le dépôt** :
-   ```bash
-   git clone https://github.com/justin2119/e-commerce.git
-   ```
-
-2. **Installer les dépendances** :
-   ```bash
-   cd e_commerce
-   flutter pub get
-   ```
-
-3. **Lancer l'application** :
-   ```bash
-   flutter run
-   ```
-
-## 📜 Licence & Crédits
-
-Développé par Justin. Photos des produits sourcées via Wikimedia Commons pour garantir des visuels réels et une disponibilité constante.
-
----
-*Note : Ce projet est en phase de développement technique actif, utilisant des jeux de données de test pour la validation des flux.*
+The suite includes unit tests for repositories and widget tests for core screens.
