@@ -17,6 +17,11 @@ class Panier extends ConsumerWidget {
         centerTitle: true,
         backgroundColor: Colors.deepOrange,
         foregroundColor: Colors.white,
+        actions: [
+          IconButton(onPressed: (){
+            ref.read(cartProvider.notifier).clearCart();
+          }, icon: Icon(Icons.delete))
+        ],
       ),
       body:Container(
         margin: EdgeInsets.all(10),
@@ -25,32 +30,91 @@ class Panier extends ConsumerWidget {
             SizedBox(height: 10,),
             Expanded(
               child: ListView.separated(
-                  itemBuilder: (context, index) =>Row(
+                  itemBuilder: (context, index){
+                    final product = cart[index];
+                    return ListTile(
+                      leading:Card.outlined(
+                        child: Image.network(
+                          product.product.imageUrl,
+                          width: 100,
+                          height: 100,
+                      )),
+                      title: Text(product.product.name,
+                        style: GoogleFonts.abel(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      subtitle: Text("${product.product.price} CFA"),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(onPressed: () {
+                            ref.read(cartProvider.notifier).removeFromCart(product.product);
+                          }, icon:Icon(Icons.delete),),
+                          IconButton(onPressed: (){
+                            ref.read(cartProvider.notifier).increment(product.product);
+                          }, icon:Icon(Icons.add)),
+                          Text("${product.quantity}", style: GoogleFonts.abel()),
+                          IconButton(onPressed: (){
+                            ref.read(cartProvider.notifier).decrement(product.product);
+                          }, icon:Icon(Icons.remove)),
+                        ],
+                      )
+                    );
+                  },
+                  separatorBuilder: (context, index) => Divider(height: 5,),
+                  itemCount: cart.length
+              ),
+            ),
+            SizedBox(height: 10,),
+            
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+          elevation: 8,
+          color: Colors.deepOrange,
+          child: Row(
+            children:[
+              Expanded(
+                  child:Text("Total: ${ref.watch(cartProvider.notifier).totalPrice.toStringAsFixed(2) } CFA",
+                    style:GoogleFonts.abel(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white
+                    ) ,
+                  ),
+                ),
+              InkWell(
+                onTap: (){},
+                child: Container(
+                  width: 130,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        height: 100,
-                        width: 100,
-                        color: Colors.deepOrange,
+                      Text("Payer",
+                        style: GoogleFonts.abel(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepOrange
+                        ),
                       ),
-                      Text("Nom du Produits"),
-                      Row(
-                        children: [
-                          IconButton(onPressed: () {}, icon:Icon(Icons.delete),),
-                          IconButton(onPressed: (){}, icon:Icon(Icons.add)),
-                          Text("1"),
-                          IconButton(onPressed: (){}, icon:Icon(Icons.remove)),
-                        ],
+                      Icon(Icons.payment,
+                        size: 30,
                       )
                     ],
                   ),
-                  separatorBuilder: (context, index) => Divider(height: 5,),
-                  itemCount: 10
-              ),
-            )
-          ],
-        ),
-      )
+                )
+              )
+            ],
+          )
+      ),
     ) ;
   }
 }

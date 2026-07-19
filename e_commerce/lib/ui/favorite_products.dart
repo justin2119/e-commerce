@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,6 +22,11 @@ class FavoriteProducts extends ConsumerWidget {
         backgroundColor: Colors.deepOrange,
         foregroundColor: Colors.white,
         leading: Icon(Icons.favorite_sharp),
+        actions: [
+          IconButton(onPressed: (){
+            ref.read(favoriteProvider.notifier).clearFavorite();
+          }, icon: Icon(Icons.delete))
+        ],
       ),
       body: Container(
         margin: EdgeInsets.all(10),

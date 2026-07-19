@@ -1,13 +1,15 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../domain/models/product.dart';
+import '../../domain/wiewmodel/provider/Favorite_Notifier.dart';
 
-class RecommendeWidget extends StatelessWidget {
+class RecommendeWidget extends ConsumerWidget {
   final List<Product> products;
   const RecommendeWidget({Key? key, required this.products}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Expanded(
       child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -19,6 +21,7 @@ class RecommendeWidget extends StatelessWidget {
         itemCount: 4,
         itemBuilder: (context, index) {
           final product = products[index];
+          final isFavorite = ref.watch(favoriteProvider).any((item) => item.id == product.id);
           return InkWell(
             onTap: (){
               context.push("/detail",extra: product);
@@ -48,7 +51,7 @@ class RecommendeWidget extends StatelessWidget {
                             product.imageUrl,
                             fit: BoxFit.cover,
                             width: double.infinity,
-                            errorBuilder: (context, error, stackTrace) => 
+                            errorBuilder: (context, error, stackTrace) =>
                               Container(color: Colors.grey.shade200, child: const Icon(Icons.error)),
                           ),
                         ),
@@ -103,8 +106,10 @@ class RecommendeWidget extends StatelessWidget {
                     top: 5,
                     right: 5,
                     child: IconButton(
-                      icon: const Icon(Icons.favorite_border, color: Colors.deepOrange),
-                      onPressed: () {},
+                      icon: Icon(Icons.favorite, color: isFavorite ? Colors.deepOrange : Colors.grey),
+                      onPressed: () {
+                        ref.read(favoriteProvider.notifier).toggleFavorite(product);
+                      },
                     )
                 ),
               ]

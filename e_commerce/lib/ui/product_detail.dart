@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../domain/models/product.dart';
+import '../domain/wiewmodel/provider/Favorite_Notifier.dart';
 import '../domain/wiewmodel/provider/panier_Notifier.dart';
 
 class ProductDetail extends ConsumerWidget {
@@ -9,6 +10,9 @@ class ProductDetail extends ConsumerWidget {
   const ProductDetail({super.key, required this.product});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final cart = ref.watch(cartProvider);
+    final isFavorite = ref.watch(favoriteProvider).any((item) => item.id == product.id);
+    final isAddToCart = cart.any((item) => item.product.id == product.id);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -191,14 +195,17 @@ class ProductDetail extends ConsumerWidget {
         child: Row(
           children: [
             IconButton(
-              onPressed: () {  },
-              icon: Icon(Icons.favorite,size: 40,color:Colors.white,),
+              onPressed: () {
+                ref.read(favoriteProvider.notifier).toggleFavorite(product);
+              },
+              icon: Icon(Icons.favorite,size: 40,color: isFavorite ? Colors.red : Colors.white,),
             ),
             Expanded(
               child: ElevatedButton(
                   onPressed: () {
                     ref.read(cartProvider.notifier)
                         .addToCart(product);
+
                   },
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(10),
@@ -207,7 +214,7 @@ class ProductDetail extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(15)
                       )
                   ),
-                  child: Text("Ajouter au panier", style: GoogleFonts.abel(
+                  child: Text(isAddToCart ? "Retirer du panier" : "Ajouter au panier", style: GoogleFonts.abel(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                       color: Colors.deepOrange

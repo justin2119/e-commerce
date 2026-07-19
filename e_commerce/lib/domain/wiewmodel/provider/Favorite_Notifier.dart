@@ -20,6 +20,12 @@ class FavoriteNotifier extends Notifier<List<Product>> {
   bool isFavorite(Product product) {
     return state.any((item) => item.id == product.id);
   }
+  int get favoriteCount {
+    return state.length;
+  }
+  void clearFavorite(){
+    state=[];
+  }
 }
 
 final favoriteProvider = NotifierProvider<FavoriteNotifier, List<Product>>(

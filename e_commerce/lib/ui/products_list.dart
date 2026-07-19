@@ -12,7 +12,6 @@ class ProductList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productAsync = ref.watch(productNotifierProvider);
-    final favorites = ref.watch(favoriteProvider);
     return Scaffold(
       appBar: AppBar(
         title: TextField(
@@ -48,7 +47,6 @@ class ProductList extends ConsumerWidget {
             Expanded(
               child: productAsync.when(
                 data: (products){
-                  final isFavorite=favorites.any((item)=>item.id == products.map((f)=>f.id));
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -58,6 +56,7 @@ class ProductList extends ConsumerWidget {
                     ),
                     itemBuilder: (context, index){
                       final product = products[index];
+                      final isFavorite = ref.watch(favoriteProvider).any((item) => item.id == product.id);
                       return InkWell(
                         onTap: (){
                           context.push(
@@ -127,9 +126,7 @@ class ProductList extends ConsumerWidget {
                                   top: 5,
                                   right: 5,
                                   child: IconButton(
-                                    icon: isFavorite?
-                                    Icon(Icons.favorite, color: Colors.deepOrange):
-                                    Icon(Icons.favorite, color: Colors.grey),
+                                    icon:Icon(Icons.favorite, color: isFavorite ? Colors.red : Colors.grey),
                                     onPressed: () {
                                       ref.read(favoriteProvider.notifier).toggleFavorite(product);
                                     },

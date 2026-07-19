@@ -22,6 +22,7 @@ final itemListWidgetProvider=StateProvider<List<Widget>>((ref)=>[
 ]);
 
 final indexProvider = StateProvider<int>((ref)=>0);
+final isAddToCartProvider=StateProvider<bool>((ref)=>false);
 final PanierProvider=StateProvider<List<Product>>((ref)=>[]);
 final FavoriteProvider=StateProvider<List<Product>>((ref)=>[]);
 
