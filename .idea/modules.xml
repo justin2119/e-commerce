@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/e-commerce.iml" filepath="$PROJECT_DIR$/.idea/e-commerce.iml" />
+      <module fileurl="file://$PROJECT_DIR$/e_commerce.iml" filepath="$PROJECT_DIR$/e_commerce.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/e_commerce_android.iml" filepath="$PROJECT_DIR$/android/e_commerce_android.iml" />
     </modules>
   </component>
 </project>
