@@ -1,4 +1,4 @@
-# Ecommerce Poke - Application Mobile de Vente de Produits
+# Ecommerce - Application Mobile de Vente de Produits
 
 ## Présentation du Projet
 Il s'agit d'une application mobile d'e-commerce Flutter haute performance dédiée à la vente de produits, conçue avec un accent sur la **Clean Architecture**, une **Gestion d'État Robuste** (State Management) et une esthétique minimaliste **Dark UI**. Le projet implémente un stockage persistant pour le panier d'achat et les favoris de l'utilisateur, garantissant une expérience utilisateur fluide d'une session à l'autre.
