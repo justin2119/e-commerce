@@ -1,61 +1,56 @@
-# Togo Marché : Infrastructure E-commerce Flutter
+# Ecommerce Poke - Application Mobile de Vente de Produits
 
-Ce projet constitue une base technique robuste pour une application mobile de commerce électronique. Bien que l'objectif final soit la distribution de produits du terroir togolais (Gari, Adémè, Moringa, etc.), la phase actuelle se concentre sur la validation structurelle et l'intégration de flux de données via des APIs de test.
+## Présentation du Projet
+Il s'agit d'une application mobile d'e-commerce Flutter haute performance dédiée à la vente de produits, conçue avec un accent sur la **Clean Architecture**, une **Gestion d'État Robuste** (State Management) et une esthétique minimaliste **Dark UI**. Le projet implémente un stockage persistant pour le panier d'achat et les favoris de l'utilisateur, garantissant une expérience utilisateur fluide d'une session à l'autre.
 
-## 🛠 Stack Technique
+## Clean Architecture
+Le projet est strictement organisé en trois couches distinctes :
+1. **Data Layer** : Responsable de la récupération et de la persistance des données.
+   - `lib/data/repositories/` : Implémentations concrètes des repositories (Produits, Panier, Favoris).
+   - `lib/data/dto/` : Data Transfer Objects pour une sérialisation JSON sécurisée.
+   - `lib/data/data_test.dart` : Source de données mock pour les produits de spécialité togolaise.
+2. **Domain Layer** : Contient la logique métier centrale et les entités.
+   - `lib/domain/models/` : Entités de base (Product).
+   - `lib/domain/repositories/` : Interfaces abstraites des repositories.
+   - `lib/domain/wiewmodel/provider/` : Providers Riverpod pour l'état de l'application.
+3. **Presentation Layer** : Les composants de l'interface utilisateur (UI).
+   - `lib/screens/` : Écrans modulaires (Accueil, Détails Produit, Panier, Profil).
+   - `lib/main.dart` : Point d'entrée de l'application et configuration du routage.
 
-- **Framework** : [Flutter](https://flutter.dev) (Null-safety)
-- **Gestion d'État** : [Riverpod](https://riverpod.dev) (Utilisation de `AsyncNotifier` pour une gestion asynchrone robuste)
-- **Architecture** : Clean Architecture avec pattern MVVM (Model-View-ViewModel)
-- **Réseau** : [Dio](https://pub.dev/packages/dio) pour des requêtes API performantes et sécurisées
-- **Persistence & Mapping** : DTOs (Data Transfer Objects) typés et immuables
+## Riverpod Providers
+Nous implémentons plus de 7 providers Riverpod distincts pour un contrôle granulaire de l'état :
+- **productsProvider** : Un FutureProvider qui récupère la liste des produits de manière asynchrone.
+- **productDetailProvider** : Un Family FutureProvider pour récupérer les détails d'un produit spécifique par ID.
+- **cartProvider** : Un AsyncNotifierProvider qui gère l'état persistant du panier d'achat.
+- **favoriteProvider** : Un AsyncNotifierProvider gérant les produits favoris persistants de l'utilisateur.
+- **productFilterProvider** : Un StateProvider gérant la recherche, le filtrage par catégorie et le tri par prix.
+- **userProfileProvider** : Fournit des données de profil utilisateur fictives statiques.
+- **filteredProductsProvider** : Un provider dérivé qui calcule la liste filtrée et triée en fonction des préférences actuelles de l'utilisateur.
 
-## ✨ Fonctionnalités & État du Projet
+## Caractéristiques Clés
+- **Persistence** : Utilisation de `shared_preferences` avec sérialisation JSON via les DTOs pour le panier et les favoris.
+- **Gestion des Erreurs** : Blocs try-catch robustes et gestion explicite de `FormatException` lors du parsing JSON.
+- **UI Design** : 
+  - Bordure arrondie nulle (`0.0`) sur toutes les cartes, boutons et champs de saisie.
+  - Typographie personnalisée utilisant `GoogleFonts.abel`.
+  - Thème sombre profond (`#263238`) avec des accents blancs contrastés.
+- **Navigation** : Routage déclaratif utilisant `go_router`.
 
-- **Validation par API Mock** : L'application utilise actuellement [DummyJSON](https://dummyjson.com) pour simuler les interactions backend, permettant de valider le mapping de données complexe et la gestion d'état avant le passage en production.
-- **Architecture Propre (Clean Architecture)** : Séparation stricte des responsabilités entre la couche de données, le domaine et la présentation.
-- **Pattern MVVM** : Utilisation de ViewModels pour isoler la logique métier de l'interface utilisateur.
-- **Mapping de Données Résilient** : Implémentation de DTOs capables de transformer des structures JSON hétérogènes (ex: conversion de listes d'images en URLs uniques) en modèles de domaine stables.
-- **Prêt pour le Terroir** : Les modèles de données sont conçus pour intégrer nativement les spécificités des produits togolais (origine, type de conservation).
+## Prise en Main
+### Dépendances
+- `flutter_riverpod` : Gestion d'état.
+- `shared_preferences` : Persistance locale.
+- `go_router` : Routage déclaratif.
+- `google_fonts` : Typographie personnalisée.
 
-## 📂 Structure du Projet
+### Installation
+1. Cloner le repository.
+2. Exécuter `flutter pub get` pour installer les dépendances.
+3. Exécuter `flutter run` pour démarrer l'application.
 
-L'application suit une structure modulaire basée sur la Clean Architecture :
-
-```text
-lib/
-├── data/           # Sources de données et implémentations des dépôts
-│   └── data_test   # Configuration des données locales de test
-├── domain/         # Cœur métier (Entités, Interfaces, DTOs)
-│   ├── models/     # Modèles de domaine immuables
-│   ├── dto/        # Mapping et transfert de données API
-│   └── repository/ # Contrats et interfaces de données
-├── ui/             # Couche de présentation
-│   └── viewmodel/  # Logique d'état et interaction (Riverpod)
-└── main.dart       # Point d'entrée de l'application
+### Exécution des Tests
+Exécutez la suite de tests complète avec :
+```bash
+flutter test
 ```
-
-## 🚀 Installation
-
-1. **Cloner le dépôt** :
-   ```bash
-   git clone https://github.com/justin2119/e-commerce.git
-   ```
-
-2. **Installer les dépendances** :
-   ```bash
-   cd e_commerce
-   flutter pub get
-   ```
-
-3. **Lancer l'application** :
-   ```bash
-   flutter run
-   ```
-
-## 📜 Licence & Crédits
-
-Développé par Justin. Photos des produits sourcées via Wikimedia Commons pour garantir des visuels réels et une disponibilité constante.
-
----
-*Note : Ce projet est en phase de développement technique actif, utilisant des jeux de données de test pour la validation des flux.*
+La suite comprend des tests unitaires pour les repositories et des tests de widgets pour les écrans principaux.
