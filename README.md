@@ -1,6 +1,5 @@
 # Togo Marché : Infrastructure E-commerce Flutter
 
-Ce projet constitue une base technique robuste pour une application mobile de commerce électronique. Bien que l'objectif final soit la distribution de produits du terroir togolais (Gari, Adémè, Moringa, etc.), la phase actuelle se concentre sur la validation structurelle et l'intégration de flux de données via des APIs de test.
 
 ## 🛠 Stack Technique
 
